@@ -1,0 +1,32 @@
+def read(filename):
+	file = open(filename, 'r')
+	Telefonbuch = {}
+	buch = file.readlines()
+	for i in buch:
+		i = i.rstrip('\n')
+		name, number = i.split(',')
+		pre, post = number.split('/')
+		dic.update({name:[(pre, post)]})
+	return dic
+
+def safe(dic, name):
+	file = open(name, 'w+')
+	for key in sorted(dic):
+		file.write('%s: %i/%i\n' % (key, int(dic[key][0][0]), int(dic[key][0][1])))
+
+def add(dic, name='Cedric Luger', number='0123/456'):
+	pre, post = number.split('/')
+	if name in dic:
+		dic[name].append((pre, post))
+	else:
+		dic.update({name:[(pre, post)]})
+	dic = {sorted(dic)[i]: dic[sorted(dic)[i]] for i in range(len(dic))}
+
+if __name__ == '__main__':
+	d1 = read('Telefonbuch.csv')
+	add(d1)
+	add(d1, 'Patrick Abels', '9876/666666')
+	safe(d1, 'cedds_dic')
+	
+
+
